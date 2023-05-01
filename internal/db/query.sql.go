@@ -7,7 +7,23 @@ package db
 
 import (
 	"context"
+	"database/sql"
 )
+
+const createCategory = `-- name: CreateCategory :exec
+INSERT INTO categories (id, name, description) VALUES (?, ?, ?)
+`
+
+type CreateCategoryParams struct {
+	ID          string
+	Name        string
+	Description sql.NullString
+}
+
+func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) error {
+	_, err := q.db.ExecContext(ctx, createCategory, arg.ID, arg.Name, arg.Description)
+	return err
+}
 
 const getCategory = `-- name: GetCategory :one
 SELECT id, name, description FROM categories WHERE id = ?
