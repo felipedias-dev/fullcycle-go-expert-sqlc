@@ -9,6 +9,17 @@ import (
 	"context"
 )
 
+const getCategory = `-- name: GetCategory :one
+SELECT id, name, description FROM categories WHERE id = ?
+`
+
+func (q *Queries) GetCategory(ctx context.Context, id string) (Category, error) {
+	row := q.db.QueryRowContext(ctx, getCategory, id)
+	var i Category
+	err := row.Scan(&i.ID, &i.Name, &i.Description)
+	return i, err
+}
+
 const listCategories = `-- name: ListCategories :many
 SELECT id, name, description FROM categories
 `
