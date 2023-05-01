@@ -62,3 +62,18 @@ func (q *Queries) ListCategories(ctx context.Context) ([]Category, error) {
 	}
 	return items, nil
 }
+
+const updateCategory = `-- name: UpdateCategory :exec
+UPDATE categories SET name = ?, description = ? WHERE id = ?
+`
+
+type UpdateCategoryParams struct {
+	Name        string
+	Description sql.NullString
+	ID          string
+}
+
+func (q *Queries) UpdateCategory(ctx context.Context, arg UpdateCategoryParams) error {
+	_, err := q.db.ExecContext(ctx, updateCategory, arg.Name, arg.Description, arg.ID)
+	return err
+}
