@@ -9,3 +9,6 @@ INSERT INTO categories (id, name, description) VALUES (?, ?, ?);
 
 -- name: UpdateCategory :exec
 UPDATE categories SET name = ?, description = ? WHERE id = ?;
+
+-- name: DeleteCategory :exec
+DELETE FROM categories WHERE id = ?;

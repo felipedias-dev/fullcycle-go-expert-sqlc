@@ -25,6 +25,15 @@ func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) 
 	return err
 }
 
+const deleteCategory = `-- name: DeleteCategory :exec
+DELETE FROM categories WHERE id = ?
+`
+
+func (q *Queries) DeleteCategory(ctx context.Context, id string) error {
+	_, err := q.db.ExecContext(ctx, deleteCategory, id)
+	return err
+}
+
 const getCategory = `-- name: GetCategory :one
 SELECT id, name, description FROM categories WHERE id = ?
 `
