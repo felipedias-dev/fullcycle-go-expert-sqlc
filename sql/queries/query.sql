@@ -14,4 +14,4 @@ UPDATE categories SET name = ?, description = ? WHERE id = ?;
 DELETE FROM categories WHERE id = ?;
 
 -- name: CreateCourse :exec
-INSERT INTO courses (id, name, description, category_id) VALUES (?, ?, ?, ?);
+INSERT INTO courses (id, name, description, price, category_id) VALUES (?, ?, ?, ?, ?);

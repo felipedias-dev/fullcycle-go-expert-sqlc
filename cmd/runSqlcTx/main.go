@@ -22,16 +22,17 @@ func NewCourseDB(dbConn *sql.DB) *CourseDB {
 	}
 }
 
-type CourseParams struct {
+type CategoryParams struct {
 	ID          string
 	Name        string
 	Description sql.NullString
 }
 
-type CategoryParams struct {
+type CourseParams struct {
 	ID          string
 	Name        string
 	Description sql.NullString
+	Price       float64
 }
 
 func (c *CourseDB) callTx(ctx context.Context, fn func(*db.Queries) error) error {
@@ -64,6 +65,7 @@ func (c *CourseDB) CreateCourseAndCategory(ctx context.Context, argsCategory Cat
 			ID:          argsCourse.ID,
 			Name:        argsCourse.Name,
 			Description: argsCourse.Description,
+			Price:       argsCourse.Price,
 			CategoryID:  argsCategory.ID,
 		})
 		if err != nil {
